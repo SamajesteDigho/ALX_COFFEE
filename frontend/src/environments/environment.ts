@@ -9,6 +9,6 @@ export const environment = {
     url: 'samajeste-digho-fsnd.us.auth0.com', // the auth0 domain prefix
     audience: 'Coffee', // the audience set for the auth0 app
     clientId: 'TAdWbuI5kVxN15DB1ssYSfXgYTmaLVq8', // the client id generated for the auth0 app
-    callbackURL: 'http://localhost:8100', // the base url of the running ionic application. 
+    callbackURL: 'http://127.0.0.1:8100/', // the base url of the running ionic application. 
   }
 };

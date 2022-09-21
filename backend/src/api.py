@@ -123,30 +123,33 @@ def create_drink(permission):
 @app.route('/drinks/<int:id>', methods=['PATCH'])
 @requires_auth(permission='patch:drinks')
 def update_drink(permission, id):
-    drink = Drink.query.get(id)
-    if drink is None:
-        abort(500)
-    data = json.loads(request.data)
-    if 'title' in data.keys():
-        drink.title = data['title']
-    if 'recipe' in data.keys():
-        recipe = '[{' + \
-                 '"name":"' + str(data['recipe']['name']) + \
-                 '", "color":"' + str(data['recipe']['color']) + \
-                 '", "parts":"' + str(data['recipe']['parts']) + \
-                 '"}]'
-        drink.recipe = recipe
-    try:
-        drink.update()
-        return jsonify({
-            'success': True,
-            'drinks': [drink.long()]
-        })
+    try :
+        drink = Drink.query.get(id)
+        if drink is None:
+            abort(500)
+        data = json.loads(request.data)
+        if 'title' in data.keys():
+            drink.title = data['title']
+        if 'recipe' in data.keys():
+            recipe = '[{' + \
+                     '"name":"' + str(data['recipe']['name']) + \
+                     '", "color":"' + str(data['recipe']['color']) + \
+                     '", "parts":"' + str(data['recipe']['parts']) + \
+                     '"}]'
+            drink.recipe = recipe
+        try:
+            drink.update()
+            return jsonify({
+                'success': True,
+                'drinks': [drink.long()]
+            })
+        except Exception as e:
+            return jsonify({
+                'success': False,
+                'reason': e.__str__()
+            })
     except Exception as e:
-        return jsonify({
-            'success': False,
-            'reason': e.__str__()
-        })
+        print(e)
 
 
 '''
